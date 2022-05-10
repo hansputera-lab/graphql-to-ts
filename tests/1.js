@@ -17,6 +17,17 @@ const query = `
     Paskibra
   }
 
+  # type test
+  type Account {
+    id: ID! # "!" indicate a non-null (mandatory) field
+    authType: String! # "google-auth", "github-auth", "outlook-auth"
+    email: String!
+    token: String
+    archived: Boolean!
+    disabled: Boolean!
+    verified: Boolean!
+  }
+
   # interface test
   interface Student {
     name: String!,
@@ -27,6 +38,13 @@ const query = `
 
   # Union test
   union UnionTest = Role | Ekskul
+
+  # type test
+  type User {
+    id: ID!
+    accounts: [Account!]! # (a non-null array of non-null Account values)
+    givenName: String!
+  }
 `;
 
 const typed = new GraphTyped(query);

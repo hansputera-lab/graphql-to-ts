@@ -1,9 +1,12 @@
 import type {
   TypeDefinitionNode,
   EnumTypeDefinitionNode,
+  InputValueDefinitionNode,
+  FieldDefinitionNode,
 } from 'graphql/language/ast';
 import {Kind as GraphEnum} from 'graphql/language/kinds';
 import {getFieldType} from './field';
+import {loadArguments} from './value';
 import type {QueryParsed} from '../@types';
 
 
@@ -33,9 +36,14 @@ export const loadDefinition = (
       q.type = 'interface';
       q.value = definition.fields ? definition.fields.map((field) => {
         const [typeDef, required] = getFieldType(field.type);
+        const argumentValue = (Array.isArray((field as FieldDefinitionNode).arguments) ?
+                              loadArguments(
+                                (field as FieldDefinitionNode).arguments!).value : ''
+        );
         return {
           name: field.name.value,
-          value: typeDef,
+          value: `${argumentValue.length ? `${argumentValue} => ` : ''}${
+              typeDef}`,
           required,
         };
       }) : [];
@@ -48,6 +56,7 @@ export const loadDefinition = (
       break;
     default:
       console.log(`Unknown '${definition.kind}' definition!`);
+      console.log('The definition structures:', definition);
       break;
   }
 

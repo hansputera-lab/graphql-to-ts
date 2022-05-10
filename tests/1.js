@@ -52,6 +52,12 @@ const query = `
     accounts: [Account!]! # (a non-null array of non-null Account values)
     givenName: String!
   }
+
+  type Starship {
+    id: ID!
+    name: String!
+    length(unit: LengthUnit = METER): Float
+  }
 `;
 
 const typed = new GraphTyped(query);

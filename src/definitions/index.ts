@@ -1,7 +1,7 @@
 import type {
   TypeDefinitionNode,
   EnumTypeDefinitionNode,
-  InputValueDefinitionNode,
+  //  InputValueDefinitionNode,
   FieldDefinitionNode,
 } from 'graphql/language/ast';
 import {Kind as GraphEnum} from 'graphql/language/kinds';
@@ -36,14 +36,16 @@ export const loadDefinition = (
       q.type = 'interface';
       q.value = definition.fields ? definition.fields.map((field) => {
         const [typeDef, required] = getFieldType(field.type);
-        const argumentValue = (Array.isArray((field as FieldDefinitionNode).arguments) ?
+        const argumentValue = (Array.isArray(
+            (field as FieldDefinitionNode).arguments) ?
                               loadArguments(
-                                (field as FieldDefinitionNode).arguments!).value : ''
+                                (field as FieldDefinitionNode).arguments!)
+                                  .value : ''
         );
         return {
           name: field.name.value,
           value: `${argumentValue.length ? `${argumentValue} => ` : ''}${
-              typeDef}`,
+            typeDef}`,
           required,
         };
       }) : [];

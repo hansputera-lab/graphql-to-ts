@@ -5,17 +5,17 @@ import type {
 } from 'graphql/language/ast';
 import {Kind as GraphEnum} from 'graphql/language/kinds';
 import {getFieldType} from './field';
-import type {QueryFieldParsed, QueryTypes} from '../@types';
+import type {QueryFieldParsed} from '../@types';
 
 /**
  * Get argument type
  * @param {ConstValueNode} value argument node value.
  * @return {[string, string]}
- *
+ */
 export const getArgumentType = (
-  value: ConstValueNode | ValueNode,
+    value: ConstValueNode | ValueNode,
 ): [string, string] => {
-  switch(value.kind) {
+  switch (value.kind) {
     case GraphEnum.INT:
     case GraphEnum.FlOAT:
       return ['number', value.value];
@@ -38,7 +38,7 @@ export const getArgumentType = (
  * @return {QueryFieldParsed}
  */
 export const loadArguments = (
-  args: readonly InputValueDefinitionNode[],
+    args: readonly InputValueDefinitionNode[],
 ): QueryFieldParsed => {
   const argsText = args.map((arg) => {
     const [text, required] = getFieldType(arg.type);
@@ -46,6 +46,6 @@ export const loadArguments = (
   }).join(', ');
 
   return {
-    value: argsText.length ? `(${argsText})` : ''
+    value: argsText.length ? `(${argsText})` : '',
   };
 };

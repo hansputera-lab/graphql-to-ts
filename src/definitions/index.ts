@@ -27,6 +27,7 @@ export const loadDefinition = (
             .values!.map((v) => v.name.value),
       };
       break;
+    case GraphEnum.INPUT_OBJECT_TYPE_DEFINITION:
     case GraphEnum.OBJECT_TYPE_DEFINITION:
     case GraphEnum.INTERFACE_TYPE_DEFINITION:
       q.type = 'interface';

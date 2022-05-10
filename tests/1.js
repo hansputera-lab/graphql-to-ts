@@ -10,11 +10,18 @@ const query = `
     Normal
   }
 
+  # Enum test
   enum Ekskul {
     Basket,
     Voli,
     Badminton,
     Paskibra
+  }
+
+  # Input test
+  input UpdateAccountInput {
+    id: ID!
+    state: String! # "verified", "disabled", "archived"
   }
 
   # type test

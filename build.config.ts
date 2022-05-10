@@ -5,5 +5,5 @@ export default defineBuildConfig({
   entries: [
     'src/'
   ],
-  definition: true,
+  declaration: true,
 });

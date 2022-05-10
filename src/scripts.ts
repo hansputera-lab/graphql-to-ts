@@ -1,4 +1,4 @@
-import type { QueryParsed, QueryFieldParsed } from './@types';
+import type {QueryParsed, QueryFieldParsed} from './@types';
 
 /**
  * @class Scripts
@@ -25,13 +25,14 @@ export class Scripts {
 
         // it is an enum
         if (query.type === 'enum') {
-          bodyLines += ((query.value as QueryFieldParsed).value as string[]).map(
-            (x) => `    ${x}`).join(',\n');
+          bodyLines += ((query.value as QueryFieldParsed).value as string[])
+              .map(
+                  (x) => `    ${x}`).join(',\n');
         } else if (query.type === 'interface') {
           bodyLines += (query.value as QueryFieldParsed[]).map(
-            (v) => `    ${v.name!.replace(/\s/g, '_')}${
+              (v) => `    ${v.name!.replace(/\s/g, '_')}${
               v.required ? '' : '?'
-            }: ${v.value}`).join(';\n') + ';';
+              }: ${v.value}`).join(';\n') + ';';
         }
 
         bodyLines += '\n}\n';

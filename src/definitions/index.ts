@@ -1,5 +1,5 @@
 import type {
-  DefinitionNode,
+  TypeDefinitionNode,
   EnumTypeDefinitionNode,
 } from 'graphql/language/ast';
 import { Kind as GraphEnum } from 'graphql/language/kinds';
@@ -13,22 +13,22 @@ import type {QueryParsed} from '../@types';
  * @return {QueryParsed}
  */
 export const loadDefinition = (
-    definition: DefinitionNode,
+    definition: TypeDefinitionNode,
 ): QueryParsed => {
   const q: QueryParsed = {
     'name': definition.name.value,
   };
 
-  switch (field.kind) {
+  switch (definition.kind) {
     case GraphEnum.ENUM_TYPE_DEFINITION:
       q.value = {
         value: (definition as EnumTypeDefinitionNode)
-            .values.map((e) => `"${e.name.value}"`).join(' | '),
+            .values!.map((e) => `"${e.name.value}"`).join(' | '),
         required: false,
       };
       break;
     case GraphEnum.OBJECT_TYPE_DEFINITION:
-      q.value = definition.fields.map((field) => {
+      q.value = definition.fields!.map((field) => {
         const [typeDef, required] = getFieldType(field.type);
         return {
           name: field.name.value,

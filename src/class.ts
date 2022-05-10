@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
 import {loadDefinition} from './definitions';
+import type { TypeDefinitionNode } from 'graphql/language/ast';
 
 /**
  * @class GraphTyped
@@ -19,7 +20,7 @@ export class GraphTyped {
 
     // process 'definitions'
     const definitions = query.definitions.map(
-        (definition) => loadDefinition(definition),
+        (definition) => loadDefinition(definition as TypeDefinitionNode),
     );
 
     console.log(definitions);

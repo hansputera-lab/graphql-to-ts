@@ -1,9 +1,10 @@
 import gql from 'graphql-tag';
 import {loadDefinition} from './definitions';
-import type { TypeDefinitionNode } from 'graphql/language/ast';
+import type {TypeDefinitionNode} from 'graphql/language/ast';
+import type {QueryParsed} from './@types';
 
 /**
- * @class GraphTyped
+* @class GraphTyped
  */
 export class GraphTyped {
   /**
@@ -15,14 +16,10 @@ export class GraphTyped {
    * Parse the graphql syntax.
    * @return {void}
    */
-  parse() {
+  parse(): QueryParsed[] {
     const query = gql(this.syntax);
-
-    // process 'definitions'
-    const definitions = query.definitions.map(
+    return query.definitions.map(
         (definition) => loadDefinition(definition as TypeDefinitionNode),
     );
-
-    console.log(definitions);
   }
 }

@@ -1,0 +1,7 @@
+node_modules/
+*.yml
+*.lock
+tests/
+src/
+build.config.ts
+.eslintrc.js
